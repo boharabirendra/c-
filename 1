@@ -1,0 +1,29 @@
+#include <iostream>
+#include <chrono>
+
+int main(){
+
+	auto start = std::chrono::high_resolution_clock::now();
+
+	int _MAX = 100000000;
+	int _primeNumbers = 0;
+
+	for(int i = 2; i < _MAX; i++){
+	       for(int j = 2; j <= (i * 0.5); j++){
+			if(i % j == 0){
+		 		return -1;
+			}
+		}
+	       _primeNumbers++;
+	}	       
+	
+	auto stop = std::chrono::high_resolution_clock::now();
+
+	auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
+
+
+	std::cout<< "Time taken: " << duration.count() << std::endl;
+	std::cout<< "Total prime numbers: "<< _primeNumbers << std::endl;	
+
+	return 0;
+}
