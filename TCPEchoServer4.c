@@ -17,6 +17,8 @@ void HandleTCPClient(int clntSocket)
 
     ssize_t numBytesRcvd = recv(clntSocket, buffer, BUFSIZE, 0);
 
+    printf("=====> %ld\n", numBytesRcvd);
+
     for (int i = 0; i < 77; i++)
     {
         printf("%c", buffer[i]);
@@ -27,11 +29,9 @@ void HandleTCPClient(int clntSocket)
         DieWithSystemMessage("recv() failed");
     }
 
-    // while (numBytesRcvd)
-    // {
     ssize_t numBytesSent = send(clntSocket, "HTTP/1.1 200 OK \r\n\r\nHello, World!\r\n", numBytesRcvd, 0);
 
-    printf("Sent bytes => %ld\n", numBytesSent);
+    printf("=====> %ld\n", numBytesSent);
 
     if (numBytesSent < 0)
     {
@@ -39,18 +39,10 @@ void HandleTCPClient(int clntSocket)
     }
     else if (numBytesSent != numBytesRcvd)
     {
-        DieWithUserMessage("send()", "sent unexpected number of bytes");
-    }
-
-    numBytesRcvd = recv(clntSocket, buffer, BUFSIZE, 0);
-
-    if (numBytesRcvd < 0)
-    {
-        DieWithSystemMessage("recv() failed");
+        DieWithUserMessage("send()", "sent unexpected number of bytes\n");
     }
 
     close(clntSocket);
-    // }
 }
 
 int main(int argc, char *argv[])
