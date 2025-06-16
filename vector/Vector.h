@@ -17,10 +17,11 @@ public:
     Vector(const size_type _n, const _Tp &_value)
     {
         _m_data = new _Tp(_n * _alloc_factor);
+        _start = _m_data;
 
         for (size_type i = 0; i < _n; i++)
         {
-            _m_data[i] = _value;
+            *_start++ = _value;
         }
 
         _m_size = _n;
@@ -64,7 +65,7 @@ public:
             _m_data = _m_temp_data;
         }
 
-        _m_data[size()] = _val;
+        *_start++ = _val;
 
         _m_size = size() + 1;
     }
@@ -72,7 +73,7 @@ public:
 private:
     size_type _m_size;
     size_type _m_capacity;
-    _Tp *_m_data = nullptr;
+    _Tp *_m_data, *_start = nullptr;
     size_type _alloc_factor = 2;
 };
 
