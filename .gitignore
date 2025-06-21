@@ -1,0 +1,4 @@
+# Exclude .s (assembly) file
+*.s
+
+main
