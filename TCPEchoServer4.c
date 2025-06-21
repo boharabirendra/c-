@@ -1,13 +1,13 @@
 #include <stdio.h>
-#include <netinet/in.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <unistd.h>
+#include <sys/types.h>
 #include <arpa/inet.h>
 #include "Practical.h"
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
 
 static const int MAXPENDING = 5;
 
@@ -15,14 +15,7 @@ void HandleTCPClient(int clntSocket)
 {
     char buffer[BUFSIZE];
 
-    ssize_t numBytesRcvd = recv(clntSocket, buffer, BUFSIZE, 0);
-
-    printf("=====> %ld\n", numBytesRcvd);
-
-    for (int i = 0; i < 77; i++)
-    {
-        printf("%c", buffer[i]);
-    }
+    ssize_t numBytesRcvd = read(clntSocket, buffer, BUFSIZE);
 
     if (numBytesRcvd < 0)
     {
@@ -30,8 +23,6 @@ void HandleTCPClient(int clntSocket)
     }
 
     ssize_t numBytesSent = send(clntSocket, "HTTP/1.1 200 OK \r\n\r\nHello, World!\r\n", numBytesRcvd, 0);
-
-    printf("=====> %ld\n", numBytesSent);
 
     if (numBytesSent < 0)
     {
